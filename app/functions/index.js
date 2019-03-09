@@ -4,6 +4,7 @@
 // Actions on Google client library.
 const {
   dialogflow,
+  Suggestions,
 } = require('actions-on-google');
 
 const fetch = require('node-fetch');
@@ -16,12 +17,14 @@ app.intent('favorite MLB team', (conv, {MLB_Team}) => {
   if (MLB_Team === 'New York Yankees') {
     const audioSound = 'https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg';
       conv.ask(`<speak>Terrible choice.<audio src="${audioSound}"></audio></speak>`);
-      conv.close('Rethink your life choices and try again.')
+      conv.ask('Rethink your life choices and try again.')
   } else if (MLB_Team === 'Boston Red Sox') {
-    conv.close('Excellent choice!');
+    conv.ask('Excellent choice!');
   } else {
-    conv.close(`The ${MLB_Team} are okay, but have you considered being a Red Sox fan?`);
+    conv.ask(`The ${MLB_Team} are okay, but have you considered being a Red Sox fan?`);
   }
+  conv.ask(`Anything you'd like to know about the ${MLB_Team}?`);
+  conv.ask(new Suggestions('Yes', 'No'));
 });
 
 app.intent('get score', (conv, { MLB_Team, date}) => {
