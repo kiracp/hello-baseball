@@ -59,7 +59,7 @@ app.intent('get score', (conv, { MLB_Team, date}) => {
 
     // Create a basic card
     if (conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')) {
-      const team_logo_url = helpers.findTeamLogoUrl(MLB_Team);
+      const team_logo_url = helpers.findTeamLogoUrl(teamId);
       conv.ask(new BasicCard({
         title: `${MLB_Team}: ${runsFor} - ${opposingTeam}: ${runsAgainst}`,
         //text: `On ${readableDate}, the ${MLB_Team} ${result} the ${opposingTeam}
