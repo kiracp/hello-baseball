@@ -59,13 +59,14 @@ app.intent('get score', (conv, { MLB_Team, date}) => {
 
     // Create a basic card
     if (conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')) {
+      const team_logo_url = helpers.findTeamLogoUrl(MLB_Team);
       conv.ask(new BasicCard({
         title: `${MLB_Team}: ${runsFor} - ${opposingTeam}: ${runsAgainst}`,
         //text: `On ${readableDate}, the ${MLB_Team} ${result} the ${opposingTeam}
           //      ${runsHigher} to ${runsLower}.`,
         subtitle: `Match of ${readableDate}`,
         image: new Image({
-          url: 'http://content.sportslogos.net/logos/53/53/full/c0whfsa9j0vbs079opk2s05lx.png',
+          url: team_logo_url,
           alt: 'Hello Baseball',
         }),
         display: 'CROPPED',

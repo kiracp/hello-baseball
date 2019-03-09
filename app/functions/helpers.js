@@ -13,6 +13,12 @@ const findTeamKey = teamName => {
 };
 exports.findTeamKey = findTeamKey;
 
+const findTeamLogoUrl = teamKey => {
+  const teamData = require("./data/id_to_logo.json");
+  return teamData[teamKey][0];
+};
+exports.findTeamLogoUrl = findTeamLogoUrl;
+
 const findGameResultsForTeamDate = (team, date) => {
   const year = _.split(date, "-")[0];
 
