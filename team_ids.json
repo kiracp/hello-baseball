@@ -1,92 +1,92 @@
 {
-  "ANA": {
+  "ANA": [
     "Los Angeles Angels of Anaheim"
-  },
-  "ARI": {
+  ],
+  "ARI": [
     "Arizona Diamondbacks"
-  },
-  "ATL": {
+  ],
+  "ATL": [
     "Atlanta Braves"
-  },
-  "BAL": {
+  ],
+  "BAL": [
     "Baltimore Orioles"
-  },
-  "BOS": {
+  ],
+  "BOS": [
     "Boston Red Sox"
-  },
-  "CHC": {
+  ],
+  "CHC": [
     "Chicago Cubs"
-  },
-  "CHW": {
+  ],
+  "CHW": [
     "Chicago White Sox"
-  },
-  "CIN": {
+  ],
+  "CIN": [
     "Cincinnati Reds"
-  },
-  "CLE": {
+  ],
+  "CLE": [
     "Cleveland Indians"
-  },
-  "COL": {
+  ],
+  "COL": [
     "Colorado Rockies"
-  },
-  "DET": {
+  ],
+  "DET": [
     "Detroit Tigers"
-  },
-  "MIA": {
+  ],
+  "MIA": [
     "Miami Marlins"
-  },
-  "HOU": {
+  ],
+  "HOU": [
     "Houston Astros"
-  },
-  "KCR": {
+  ],
+  "KCR": [
     "Kansas City Royals"
-  },
-  "LAD": {
+  ],
+  "LAD": [
     "Los Angeles Dodgers"
-  },
-  "MIL": {
+  ],
+  "MIL": [
     "Milwaukee Brewers"
-  },
-  "MIN": {
+  ],
+  "MIN": [
     "Minnesota Twins"
-  },
-  "NYM": {
+  ],
+  "NYM": [
     "New York Mets"
-  },
-  "NYY": {
+  ],
+  "NYY": [
     "New York Yankees"
-  },
-  "OAK": {
+  ],
+  "OAK": [
     "Oakland Athletics"
-  },
-  "PHI": {
+  ],
+  "PHI": [
     "Philadelphia Phillies"
-  },
-  "PIT": {
+  ],
+  "PIT": [
     "Pittsburgh Pirates"
-  },
-  "SDP": {
+  ],
+  "SDP": [
     "San Diego Padres"
-  },
-  "SEA": {
+  ],
+  "SEA": [
     "Seattle Mariners"
-  },
-  "SFG": {
+  ],
+  "SFG": [
     "San Francisco Giants"
-  },
-  "STL": {
+  ],
+  "STL": [
     "St. Louis Cardinals"
-  },
-  "TBR": {
+  ],
+  "TBR": [
     "Tampa Bay Rays"
-  },
-  "TEX": {
+  ],
+  "TEX": [
     "Texas Rangers"
-  },
-  "TOR": {
+  ],
+  "TOR": [
     "Toronto Blue Jays"
-  },
-  "WSN": {
+  ],
+  "WSN": [
     "Washington Nationals"
-  }
+  ]
 }
