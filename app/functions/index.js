@@ -10,6 +10,7 @@ const {
 const moment = require('moment');
 const functions = require('firebase-functions');
 const helpers = require('./helpers.js');
+const scraper = require('./scraper.js');
 
 // Instantiate the Dialogflow client.
 const app = dialogflow({debug: true});
@@ -54,14 +55,16 @@ app.intent('get score', (conv, { MLB_Team, date}) => {
   conv.ask(new Suggestions('Yes', 'No'));
 });
 
-exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
+// exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
 
 const helloWorld = (request, response) => {
   const team = helpers.findTeamKey("Boston Red Sox");
   const tbr = helpers.findTeamName("TBR");
-  response.send(JSON.stringify({
+  scraper.findGameResultsForTeamDate2(team, "2018-03-29").then(result => {
+    return response.send(JSON.stringify({
       tbr,
-      gameResult: helpers.findGameResultsForTeamDate(team, "2018-03-29")
-  }));
+      gameResult: result,
+    }));
+  }).catch(err => response.send(JSON.stringify(err)));
 };
 // exports.helloWorld = functions.https.onRequest(helloWorld);
