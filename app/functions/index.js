@@ -7,7 +7,7 @@ const {
   Suggestions,
 } = require('actions-on-google');
 
-const fetch = require('node-fetch');
+const moment = require('moment');
 const functions = require('firebase-functions');
 const helpers = require('./helpers.js');
 
@@ -29,13 +29,15 @@ app.intent('favorite MLB team', (conv, {MLB_Team}) => {
 });
 
 app.intent('get score', (conv, { MLB_Team, date}) => {
-  const gameDate = parseDate(date);
-  const teamId = teamMap[MLB_Team];
+  const gameDate = moment(date).format('YYYY-MM-DD');
+  const teamId = helpers.findTeamKey(MLB_Team);
+  const gameData = helpers.findGameResultsForTeamDate(teamId, gameDate);
+  const opposingTeam = helpers.findTeamName(gameData['opp_ID']);
 
-  const testGame = testData[0];
-  const result = getGameResult(testGame);
-  const runsFor = testData['R'];
-  const runsAgainst = testData['RA'];
+  const readableDate = moment(date).parseDate('MMMM Do YYYY');
+
+  const runsFor = gameData['R'];
+  const runsAgainst = gameData['RA'];
   let runs1;
   let runs2;
 
@@ -47,7 +49,8 @@ app.intent('get score', (conv, { MLB_Team, date}) => {
     runs2 = runsAgainst;
   }
 
-  conv.close(`On March 29, 2018, the Red Sox ${result} the Tampa Bay Rays ${runs1} to ${runs2}.`);
+
+  conv.close(`On ${readableDate}, the ${MLB_Team} ${result} the ${opposingTeam} ${runsFor} to ${runsAgainst}.`);
 });
 
 const getGameResult = (game) => {
@@ -57,28 +60,6 @@ const getGameResult = (game) => {
     return 'defeated';
   }
 };
-
-const parseDate = (dateString) => {
-  const gameDate = new Date(dateString);
-  const year = gameDate.getFullYear();
-  let month = Number(gameDate.getMonth());
-  month++;
-  if (month < 10) {
-    month = `0${month}`;
-  } else {
-    month = month.toString();
-  }
-
-  let date = Number(gameDate.getDate());
-  if (date < 10) {
-    date = `0${date}`;
-  } else {
-    date = date.toString();
-  }
-
-  const retVal = `${year}-${month}-${date}`;
-  return retVal;
-}
 
 const testData = [
   {
