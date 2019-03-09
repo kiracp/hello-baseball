@@ -29,21 +29,33 @@ app.intent('favorite MLB team', (conv, {MLB_Team}) => {
 
 app.intent('get score', (conv, { MLB_Team, date}) => {
   const gameDate = parseDate(date);
+  const teamId = teamMap[MLB_Team];
 
-  testData.forEach((game) => {
-    console.log('testData')
-  })
+  const testGame = testData[0];
+  const result = getGameResult(testGame);
+  const runsFor = testData['R'];
+  const runsAgainst = testData['RA'];
+  let runs1;
+  let runs2;
 
+  if (runsAgainst > runsFor) {
+    runs1 = runsAgainst;
+    runs2 = runsFor;
+  } else {
+    runs1 = runsFor;
+    runs2 = runsAgainst;
+  }
+
+  conv.close(`On March 29, 2018, the Red Sox ${result} the Tampa Bay Rays ${runs1} to ${runs2}.`);
 });
 
-const getUrl = (team, givenDate) => {
-  const date = new Date(givenDate);
-  const baseUrl = 'https://baseball-reference.com/teams/';
-  const teamCode = teamMap[team];
-  const year = date.getFullYear();
-
-  return `${baseUrl}${teamCode}/${year}-schedule-scores.shtml`;
-}
+const getGameResult = (game) => {
+  if (game.win_loss_result === 'L') {
+    return 'lost to';
+  } else {
+    return 'defeated';
+  }
+};
 
 const parseDate = (dateString) => {
   const gameDate = new Date(dateString);
