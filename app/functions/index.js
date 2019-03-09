@@ -91,6 +91,10 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
 
 const helloWorld = (request, response) => {
   const team = helpers.findTeamKey("Boston Red Sox");
-  response.send(JSON.stringify(helpers.findGameResultsForTeamDate(team, "2018-03-29")));
+  const tbr = helpers.findTeamName("TBR");
+  response.send(JSON.stringify({
+      tbr,
+      gameResult: helpers.findGameResultsForTeamDate(team, "2018-03-29")
+  }));
 };
 exports.helloWorld = functions.https.onRequest(helloWorld);
