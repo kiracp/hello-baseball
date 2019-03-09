@@ -33,59 +33,26 @@ app.intent('get score', (conv, { MLB_Team, date}) => {
   const teamId = helpers.findTeamKey(MLB_Team);
   const gameData = helpers.findGameResultsForTeamDate(teamId, gameDate);
   const opposingTeam = helpers.findTeamName(gameData['opp_ID']);
-
-  const readableDate = moment(date).parseDate('MMMM Do YYYY');
+  const readableDate = moment(date).format('MMMM Do YYYY');
+  const result = helpers.dictionaryMap(gameData['win_loss_result']);
 
   const runsFor = gameData['R'];
   const runsAgainst = gameData['RA'];
-  let runs1;
-  let runs2;
+  let runsHigher;
+  let runsLower;
 
   if (runsAgainst > runsFor) {
-    runs1 = runsAgainst;
-    runs2 = runsFor;
+    runsHigher = runsAgainst;
+    runsLower = runsFor;
   } else {
-    runs1 = runsFor;
-    runs2 = runsAgainst;
+    runsHigher = runsFor;
+    runsLower = runsAgainst;
   }
 
-
-  conv.close(`On ${readableDate}, the ${MLB_Team} ${result} the ${opposingTeam} ${runsFor} to ${runsAgainst}.`);
+  conv.ask(`On ${readableDate}, the ${MLB_Team} ${result} the ${opposingTeam} ${runsHigher} to ${runsLower}.`);
+  conv.ask('Would you like to hear about another game?');
+  conv.ask(new Suggestions('Yes', 'No'));
 });
-
-const getGameResult = (game) => {
-  if (game.win_loss_result === 'L') {
-    return 'lost to';
-  } else {
-    return 'defeated';
-  }
-};
-
-const testData = [
-  {
-    date_game: '2018-03-29',
-    team_ID: 'BOS',
-    homeORvis: '@',
-    opp_ID: 'TBR',
-    win_loss_result: 'L',
-    R: 4,
-    RA: 6,
-  },
-  {
-    date_game: '2018-03-30',
-    team_ID: 'BOS',
-    homeORvis: '@',
-    opp_ID: 'TBR',
-    win_loss_result: 'W',
-    R: 1,
-    RA: 0,
-  },
-];
-
-const teamMap = {
-  'Boston Red Sox': 'BOS',
-}
-
 
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
 
@@ -97,4 +64,4 @@ const helloWorld = (request, response) => {
       gameResult: helpers.findGameResultsForTeamDate(team, "2018-03-29")
   }));
 };
-exports.helloWorld = functions.https.onRequest(helloWorld);
+// exports.helloWorld = functions.https.onRequest(helloWorld);

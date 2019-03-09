@@ -13,7 +13,7 @@ const findTeamKey = teamName => {
 exports.findTeamKey = findTeamKey;
 
 const findGameResultsForTeamDate = (team, date) => {
-  const teamData = require(`./data/teams/${team}.json`);
+  const teamData = require(`./data/teams/${_.lowerCase(team)}.json`);
   const year = _.split(date, "-")[0];
   const allGames = teamData[year];
 
@@ -59,5 +59,6 @@ const dictionaryMap = key => {
     W: ["beat", "won"],
     L: ["lost to"]
   };
+  return _.sample(mapFile[key]);
 }
 exports.dictionaryMap = dictionaryMap;
