@@ -46,11 +46,14 @@ app.intent('get score', (conv, { MLB_Team, date}) => {
     const runsAgainst = gameData['RA'];
     let runsHigher;
     let runsLower;
+    let team_logo_url;
 
     if (runsAgainst > runsFor) {
+      team_logo_url = helpers.findTeamLogoUrl(teamId);
       runsHigher = runsAgainst;
       runsLower = runsFor;
     } else {
+      team_logo_url = helpers.findTeamLogoUrl(gameData['opp_ID']);
       runsHigher = runsFor;
       runsLower = runsAgainst;
     }
@@ -59,11 +62,9 @@ app.intent('get score', (conv, { MLB_Team, date}) => {
 
     // Create a basic card
     if (conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')) {
-      const team_logo_url = helpers.findTeamLogoUrl(teamId);
+      //const team_logo_url = helpers.findTeamLogoUrl(teamId);
       conv.ask(new BasicCard({
         title: `${MLB_Team}: ${runsFor} - ${opposingTeam}: ${runsAgainst}`,
-        //text: `On ${readableDate}, the ${MLB_Team} ${result} the ${opposingTeam}
-          //      ${runsHigher} to ${runsLower}.`,
         subtitle: `Match of ${readableDate}`,
         image: new Image({
           url: team_logo_url,
