@@ -1,6 +1,7 @@
 const _ = require('lodash');
-const rp = require('request-promise');
+const path = require('path');
 const Promise = require('bluebird');
+const rp = require('request-promise');
 const fs = require('fs');
 
 const processUrl = require('./processUrl');
@@ -26,7 +27,7 @@ Promise.map(urls, url => {
     allData[year] = games;
   });
 
-  fs.writeFile(`${__dirname}/data/${team}.js`, JSON.stringify(allData), function(err) {
+  fs.writeFile(path.join(__dirname, '../', `app/functions/data/teams/${team.toLowerCase()}.json`), JSON.stringify(allData), function(err) {
     if(err) {
       return console.log(err);
     }
