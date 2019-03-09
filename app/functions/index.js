@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 // Import the Dialogflow module and response creation dependencies from the
 // Actions on Google client library.
@@ -9,6 +9,7 @@ const {
 
 const fetch = require('node-fetch');
 const functions = require('firebase-functions');
+const helpers = require('./helpers.js');
 
 // Instantiate the Dialogflow client.
 const app = dialogflow({debug: true});
@@ -104,5 +105,11 @@ const teamMap = {
   'Boston Red Sox': 'BOS',
 }
 
-// Set the DialogflowApp object to handle the HTTPS POST request.
+
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
+
+const helloWorld = (request, response) => {
+  const team = helpers.findTeamKey("Boston Red Sox");
+  response.send(JSON.stringify(helpers.findGameResultsForTeamDate(team, "2018-03-29")));
+};
+exports.helloWorld = functions.https.onRequest(helloWorld);
