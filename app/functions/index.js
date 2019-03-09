@@ -4,6 +4,8 @@
 // Actions on Google client library.
 const {
   dialogflow,
+  BasicCard,
+  Image,
   Suggestions,
 } = require('actions-on-google');
 
@@ -51,11 +53,27 @@ app.intent('get score', (conv, { MLB_Team, date}) => {
   }
 
   conv.ask(`On ${readableDate}, the ${MLB_Team} ${result} the ${opposingTeam} ${runsHigher} to ${runsLower}.`);
+
+  // Create a basic card
+  if (conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')) {
+    conv.ask(new BasicCard({
+      title: `${MLB_Team}: ${runsFor} - ${opposingTeam}: ${runsAgainst}`,
+      //text: `On ${readableDate}, the ${MLB_Team} ${result} the ${opposingTeam}
+        //      ${runsHigher} to ${runsLower}.`,
+      subtitle: `Match of ${readableDate}`,
+      image: new Image({
+        url: 'http://content.sportslogos.net/logos/53/53/full/c0whfsa9j0vbs079opk2s05lx.png',
+        alt: 'Hello Baseball',
+      }),
+      display: 'CROPPED',
+    }));
+  }
+
   conv.ask('Would you like to hear about another game?');
   conv.ask(new Suggestions('Yes', 'No'));
 });
 
-// exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
+exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
 
 const helloWorld = (request, response) => {
   const team = helpers.findTeamKey("Boston Red Sox");
