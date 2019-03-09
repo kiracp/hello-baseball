@@ -28,12 +28,12 @@ app.intent('favorite MLB team', (conv, {MLB_Team}) => {
 });
 
 app.intent('get score', (conv, { MLB_Team, date}) => {
-  const url = getUrl(MLB_Team, date);
-  fetch(url)
-    .then(res => res.json())
-    .then(json => console.log(json))
-    .then(conv.close('Something went right! Yankees suck!'))
-    .catch(conv.close('Something went wrong. Yankees suck though!'))
+  const gameDate = parseDate(date);
+
+  testData.forEach((game) => {
+    console.log('testData')
+  })
+
 });
 
 const getUrl = (team, givenDate) => {
@@ -44,6 +44,49 @@ const getUrl = (team, givenDate) => {
 
   return `${baseUrl}${teamCode}/${year}-schedule-scores.shtml`;
 }
+
+const parseDate = (dateString) => {
+  const gameDate = new Date(dateString);
+  const year = gameDate.getFullYear();
+  let month = Number(gameDate.getMonth());
+  month++;
+  if (month < 10) {
+    month = `0${month}`;
+  } else {
+    month = month.toString();
+  }
+
+  let date = Number(gameDate.getDate());
+  if (date < 10) {
+    date = `0${date}`;
+  } else {
+    date = date.toString();
+  }
+
+  const retVal = `${year}-${month}-${date}`;
+  return retVal;
+}
+
+const testData = [
+  {
+    date_game: '2018-03-29',
+    team_ID: 'BOS',
+    homeORvis: '@',
+    opp_ID: 'TBR',
+    win_loss_result: 'L',
+    R: 4,
+    RA: 6,
+  },
+  {
+    date_game: '2018-03-30',
+    team_ID: 'BOS',
+    homeORvis: '@',
+    opp_ID: 'TBR',
+    win_loss_result: 'W',
+    R: 1,
+    RA: 0,
+  },
+];
 
 const teamMap = {
   'Boston Red Sox': 'BOS',
