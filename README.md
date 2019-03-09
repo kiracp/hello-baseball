@@ -1,7 +1,7 @@
 # ”Hello Baseball”
 
 <p align="center">
-  <img src="logos/hello-baseball.png"/>
+  <img src="logos/hello-baseball-3x2.png"/>
 </p>
 
 ## A voice assistant for baseball fans
