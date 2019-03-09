@@ -49,11 +49,11 @@ app.intent('get score', (conv, { MLB_Team, date}) => {
     let team_logo_url;
 
     if (runsAgainst > runsFor) {
-      team_logo_url = helpers.findTeamLogoUrl(teamId);
+      team_logo_url = helpers.findTeamLogoUrl(gameData['opp_ID']);
       runsHigher = runsAgainst;
       runsLower = runsFor;
     } else {
-      team_logo_url = helpers.findTeamLogoUrl(gameData['opp_ID']);
+      team_logo_url = helpers.findTeamLogoUrl(teamId);
       runsHigher = runsFor;
       runsLower = runsAgainst;
     }
