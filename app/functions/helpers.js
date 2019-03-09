@@ -1,4 +1,5 @@
 const _ = require("lodash");
+const scraper = require("./scraper.js");
 
 const findTeamName = teamKey => {
   const teamData = require("./data/id_to_name.json");
@@ -13,13 +14,12 @@ const findTeamKey = teamName => {
 exports.findTeamKey = findTeamKey;
 
 const findGameResultsForTeamDate = (team, date) => {
-  const teamData = require(`./data/teams/${_.lowerCase(team)}.json`);
   const year = _.split(date, "-")[0];
-  const allGames = teamData[year];
 
-  const gameData = _.find(allGames, { date_game: date });
-
-  return gameData;
+  return scraper.findGameResultsForTeamYear(team, year).then(allGames => {
+    console.log(allGames, allGames.games);
+    return _.find(allGames.games, { date_game: date });
+  });
 };
 exports.findGameResultsForTeamDate = findGameResultsForTeamDate;
 
@@ -49,7 +49,7 @@ const gameFacts = gameData => {
     streak: `with a ${hasWinStreak ? "winning" : "losing"} streak of ${
       win_loss_streak.length
     }`,
-    pitcher: `won by ${winning_pitcher}, the ${winningTeam}`,
+    pitcher: `won by ${winning_pitcher}, of the ${winningTeam}`
   };
 };
 exports.gameFacts = gameFacts;
@@ -60,5 +60,5 @@ const dictionaryMap = key => {
     L: ["lost to"]
   };
   return _.sample(mapFile[key]);
-}
+};
 exports.dictionaryMap = dictionaryMap;
