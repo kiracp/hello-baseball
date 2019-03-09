@@ -62,8 +62,8 @@ exports.gameFacts = gameFacts;
 
 const dictionaryMap = key => {
   const mapFile = {
-    W: ["beat", "won"],
-    L: ["lost to"]
+    W: ["beat", "defeated", "vanquished",],
+    L: ["lost to", "fell to", "were defeated by"]
   };
   return _.sample(mapFile[key]);
 };
